@@ -11,9 +11,9 @@ def open_file(filename):
 def lex(filecontents):
     tok = ""
     filecontents = list(filecontents)
-    for char in filecontents:
-        tok += char
-        if tok == " ":
+    for char in filecontents: # cycle threw and add each char to the last collection of characters
+        tok += char # add the previous char(s) to the current char
+        if tok == " ": # ignore spaces
             tok = ""
         elif tok == "T":
             tokens.append("T")
@@ -38,90 +38,93 @@ def lex(filecontents):
             tok = ""
         elif tok == "\n":
             tok = ""
-        #put in the case for "()"!!!!!!!!!!!
-    #print(tokens)
-    return tokens
+        # TODO put in the case for "()"!!!!!!!!!!
 
+    # print(tokens)
+    return tokens
+"""
 def parse(toks):
-    #print(toks)
+    # print(toks)
     i = 0
     while(i < len(toks)):
-        if toks[i]
-        i += 1
-
+        if (toks[i] ):
+            i += 1
+"""
 
 def Bool_stmt(toks):
     if(Imply_term(toks)):
-        return true
+        return True
     else:
-        return false
+        return False
 
 def Imply_term(toks):
     if(Or_term(toks) and Imply_tail(toks)):
-        return true
+        return True
     else:
-        return false
+        return False
 
 def Or_term(toks):
     if(And_term(toks) and Or_tail(toks)):
-        return true
+        return True
     else:
-        return false
+        return False
 
 def And_term(toks):
     if(Literal(toks) and And_tail(toks)):
-        return true
+        return True
     else:
-        return false
+        return False
 
 def Imply_tail(toks):
     if(toks == "->" and Or_term(toks) and Imply_tail(toks)):
-        return true
+        return True
     elif(toks == ""):
-        return true
+        return True
     else:
-        return false
+        return False
 
 def Or_tail(toks):
     if(toks == "v" and And_term(toks) and Or_tail(toks)):
-        return true
+        return True
     elif(toks == ""):
-        return true
+        return True
     else:
-        return false
+        return False
 
 def And_tail(toks):
     if(toks == "^" and Literal(toks) and And_tail(toks)):
-        return true
+        return True
     elif(toks == ""):
-        return true
+        return True
     else:
-        return false
+        return False
 
 def Literal(toks):
     if(Atom(toks)):
-        return true
+        return True
     elif(toks == "~" and Literal(toks)):
-        return true
+        return True
     else:
-        return false
+        return False
 
 def Atom(toks):
     if(toks == "T"):
-        return true
+        return True
     elif(toks == "F"):
-        return false
-        #do this when ( is done!!! elif(toks == "()")
+        return False
+        # TODO do this when ( is done!!! elif(toks == "()")
     else:
-        return false
+        return False
 
 
 
 
 def run():
     filename = input("enter file name: ")
-    data = open_file(filename)
-    toks = lex(data)
-    parse(toks)
+    data = open_file(filename) # gets data from file input
+    toks = lex(data) # lexes data
+    # token_cmd = parse(toks)
+
+
 
 run()

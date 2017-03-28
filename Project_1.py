@@ -49,6 +49,7 @@ def parse(toks):
         if toks[i]
         i += 1
 
+
 def Bool_stmt(toks):
     if(Imply_term(toks)):
         return true

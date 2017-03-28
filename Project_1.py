@@ -115,11 +115,44 @@ def Atom(toks):
         # TODO do this when ( is done!!! elif(toks == "()")
     else:
         return False
+"""
+def get_next(toks, num):
+    count = 0
+    new = 0
+    if(count == 0):
+        count += 1
+        return toks[0]
+    else:
+        new = toks[count + num]
+        count += 1
+        return new
+"""
 
 
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def isEmpty(self):
+        return self.items == []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+    def size(self):
+        return len(self.items)
+
+    def printstack(self):
+        for items in reversed(self.items):
+            print(items)
 
 
 def run():
+    n = 0
+    s = Stack()
     filename = input("enter file name: ")
     data = open_file(filename) # gets data from file input
     toks = lex(data) # lexes data

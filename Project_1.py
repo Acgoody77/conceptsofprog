@@ -49,6 +49,7 @@ def parse(toks):
         if toks[i]
         i += 1
 
+
 def Bool_stmt(toks):
     if(Imply_term(toks)):
         return true
@@ -70,7 +71,8 @@ def Or_term(toks):
 def And_term(toks):
     if(Literal(toks) and And_tail(toks)):
         return true
-    elif(toks ##################################)
+    else:
+        return false
 
 def Imply_tail(toks):
     if(toks == "->" and Or_term(toks) and Imply_tail(toks)):
@@ -79,6 +81,40 @@ def Imply_tail(toks):
         return true
     else:
         return false
+
+def Or_tail(toks):
+    if(toks == "v" and And_term(toks) and Or_tail(toks)):
+        return true
+    elif(toks == ""):
+        return true
+    else:
+        return false
+
+def And_tail(toks):
+    if(toks == "^" and Literal(toks) and And_tail(toks)):
+        return true
+    elif(toks == ""):
+        return true
+    else:
+        return false
+
+def Literal(toks):
+    if(Atom(toks)):
+        return true
+    elif(toks == "~" and Literal(toks)):
+        return true
+    else:
+        return false
+
+def Atom(toks):
+    if(toks == "T"):
+        return true
+    elif(toks == "F"):
+        return false
+        #do this when ( is done!!! elif(toks == "()")
+    else:
+        return false
+
 
 
 

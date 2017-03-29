@@ -3,6 +3,7 @@ from sys import *
 tokens = []
 
 
+
 def open_file(filename):
     data = open(filename, "r").read()
     return data
@@ -51,69 +52,77 @@ def parse(toks):
             i += 1
 """
 
-def Bool_stmt(toks):
-    if(Imply_term(toks)):
+def Bool_stmt():
+    if(Imply_term(s.pop())):
         return True
     else:
         return False
 
-def Imply_term(toks):
-    if(Or_term(toks) and Imply_tail(toks)):
+def Imply_term(current_token):
+    if(Or_term(current_token) and Imply_tail(s.pop())):
         return True
     else:
         return False
 
-def Or_term(toks):
-    if(And_term(toks) and Or_tail(toks)):
+def Or_term(current_token):
+    if(And_term(current_token) and Or_tail(s.pop())):
         return True
     else:
         return False
 
-def And_term(toks):
-    if(Literal(toks) and And_tail(toks)):
+def And_term(current_token):
+    if(Literal(current_token) and And_tail(current_token)):
         return True
     else:
         return False
 
-def Imply_tail(toks):
-    if(toks == "->" and Or_term(toks) and Imply_tail(toks)):
+def Imply_tail(current_token):
+    if(current_token == "->" and Or_term(s.pop()) and Imply_tail(s.pop())):
+        return True
+    elif(current_token == ""):
+        return True
+    else:
+        return False
+
+def Or_tail(current_token):
+    if(current_token == "v" and And_term(s.pop()) and Or_tail(s.pop())):
         return True
     elif(toks == ""):
         return True
     else:
         return False
 
-def Or_tail(toks):
-    if(toks == "v" and And_term(toks) and Or_tail(toks)):
+def And_tail(current_token):
+    if(current_token == "^" and Literal(s.pop()) and And_tail(s.pop())):
         return True
     elif(toks == ""):
         return True
     else:
         return False
 
-def And_tail(toks):
-    if(toks == "^" and Literal(toks) and And_tail(toks)):
+def Literal(current_token):
+    if(Atom(current_token)):
         return True
-    elif(toks == ""):
-        return True
-    else:
-        return False
-
-def Literal(toks):
-    if(Atom(toks)):
-        return True
-    elif(toks == "~" and Literal(toks)):
+    elif(current_token == "~" and Literal(s.pop())):
         return True
     else:
         return False
 
-def Atom(toks):
-    if(toks == "T"):
+def Atom(current_token):
+    if(current_token == "T"):
         return True
-    elif(toks == "F"):
-        return False
-        # TODO do this when ( is done!!! elif(toks == "()")
+    elif(current_token == "F"):
+        return True
+    elif(current_token == "("):
+        if(Imply_term(s.pop())):
+            if(s.pop() == ")"):
+                True
+            else:
+                False
+        else:
+            False
     else:
+        print("Expecting '(', 'T', or 'F'")
         return False
 """
 def get_next(toks, num):
@@ -127,6 +136,11 @@ def get_next(toks, num):
         count += 1
         return new
 """
+
+def put_stack(tokens):
+    for i in reversed(tokens):
+        s.push(i)
+
 
 
 class Stack:
@@ -149,15 +163,29 @@ class Stack:
         for items in reversed(self.items):
             print(items)
 
+s = Stack()
 
 def run():
     n = 0
-    s = Stack()
+
     filename = input("enter file name: ")
     data = open_file(filename) # gets data from file input
     toks = lex(data) # lexes data
-    # token_cmd = parse(toks)
+    put_stack(toks)
+    if(Bool_stmt):
+        print("valid")
+    else:
+        print("invalid")
 
+    """ easy to debug stack
+    print(toks)
+    print("")
+    s.printstack()
+    print("")
+    print(s.pop())
+    #s.printstack()
+    # token_cmd = parse(toks)
+"""
 
 
 run()

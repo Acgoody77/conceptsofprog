@@ -114,6 +114,7 @@ def Atom(toks):
         return False
         # TODO do this when ( is done!!! elif(toks == "()")
     else:
+        print("error: expecting 'T', 'F', or '()'")
         return False
 """
 def get_next(toks, num):

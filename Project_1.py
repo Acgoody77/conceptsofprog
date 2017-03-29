@@ -122,7 +122,11 @@ def Atom(current_token):
         else:
             False
     else:
+<<<<<<< HEAD
         print("Expecting '(', 'T', or 'F'")
+=======
+        print("error: expecting 'T', 'F', or '()'")
+>>>>>>> origin/master
         return False
 """
 def get_next(toks, num):

@@ -1,14 +1,14 @@
 from sys import *
 
-tokens = []
+tokens = []  # create a list for the tokens to be stored in
 
 
-def __open_file__(filename):
+def __open_file__(filename):  # open file function that returns a string
     data = open(filename, "r").read()
     return data
 
 
-def __lex__(filecontents):
+def __lex__(filecontents):  # lex the file and check the syntax
     tok = ""
     filecontents = list(filecontents)
     for char in filecontents:  # cycle threw and add each char to the last
@@ -56,7 +56,7 @@ def parse(toks):
 """
 
 
-def __Bool_stmt__():
+def __Bool_stmt__():  # start of the interpreter semantic/syntax check
     if(__Imply_term__(s.pop())):
         return True
     else:
@@ -152,12 +152,12 @@ def get_next(toks, num):
 """
 
 
-def __put_stack__(tokens):
+def __put_stack__(tokens):  # put the tokens onto a stack to be read by the interpreter
     for i in reversed(tokens):
         s.push(i)
 
 
-class __Stack__:
+class __Stack__:  # the stack class with helpfull size and push/pop functions
     def __init__(self):
         self.items = []
 
@@ -178,15 +178,15 @@ class __Stack__:
             print(items)
 
 
-s = __Stack__()
+s = __Stack__()  # create the stack
 
 
-def __run__():
-    filename = input("enter file name: ")
+def __run__():  # main
+    filename = input("enter file name: ")  # input the file to interpret
     data = __open_file__(filename)  # gets data from file input
     toks = __lex__(data)  # lexes data
-    __put_stack__(toks)
-    if(__Bool_stmt__):
+    __put_stack__(toks)  # puts the parsed data onto the stack
+    if(__Bool_stmt__):  # call the interpreter
         print("valid")
     else:
         print("invalid")
@@ -202,4 +202,4 @@ def __run__():
 """
 
 
-__run__()
+__run__()  # run the program

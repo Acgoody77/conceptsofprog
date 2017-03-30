@@ -3,18 +3,17 @@ from sys import *
 tokens = []
 
 
-
-def open_file(filename):
+def __open_file__(filename):
     data = open(filename, "r").read()
     return data
 
 
-def lex(filecontents):
+def __lex__(filecontents):
     tok = ""
     filecontents = list(filecontents)
-    for char in filecontents: # cycle threw and add each char to the last collection of characters
-        tok += char # add the previous char(s) to the current char
-        if tok == " ": # ignore spaces
+    for char in filecontents:  # cycle threw and add each char to the last
+        tok += char   # add the previous char(s) to the current char
+        if tok == " ":   # ignore spaces
             tok = ""
         elif tok == "T":
             tokens.append("T")
@@ -40,9 +39,13 @@ def lex(filecontents):
         elif tok == "\n":
             tok = ""
         # TODO put in the case for "()"!!!!!!!!!!
-
+        else:
+            print("error")
+            return "error"
     # print(tokens)
     return tokens
+
+
 """
 def parse(toks):
     # print(toks)
@@ -52,69 +55,78 @@ def parse(toks):
             i += 1
 """
 
-def Bool_stmt():
-    if(Imply_term(s.pop())):
+
+def __Bool_stmt__():
+    if(__Imply_term__(s.pop())):
         return True
     else:
         return False
 
-def Imply_term(current_token):
-    if(Or_term(current_token) and Imply_tail(s.pop())):
+
+def __Imply_term__(current_token):
+    if(__Or_term__(current_token) and __Imply_tail__(s.pop())):
         return True
     else:
         return False
 
-def Or_term(current_token):
-    if(And_term(current_token) and Or_tail(s.pop())):
+
+def __Or_term__(current_token):
+    if(__And_term__(current_token) and __Or_tail__(s.pop())):
         return True
     else:
         return False
 
-def And_term(current_token):
-    if(Literal(current_token) and And_tail(current_token)):
+
+def __And_term__(current_token):
+    if(__Literal__(current_token) and __And_tail__(current_token)):
         return True
     else:
         return False
 
-def Imply_tail(current_token):
-    if(current_token == "->" and Or_term(s.pop()) and Imply_tail(s.pop())):
+
+def __Imply_tail__(current_token):
+    if(current_token == "->" and __Or_term__(s.pop()) and __Imply_tail__(s.pop())):
         return True
     elif(current_token == ""):
         return True
     else:
         return False
 
-def Or_tail(current_token):
-    if(current_token == "v" and And_term(s.pop()) and Or_tail(s.pop())):
+
+def __Or_tail__(current_token):
+    if(current_token == "v" and __And_term__(s.pop()) and __Or_tail__(s.pop())):
         return True
-    elif(toks == ""):
+    elif(current_token == ""):
         return True
     else:
         return False
 
-def And_tail(current_token):
-    if(current_token == "^" and Literal(s.pop()) and And_tail(s.pop())):
+
+def __And_tail__(current_token):
+    if(current_token == "^" and __Literal__(s.pop()) and __And_tail__(s.pop())):
         return True
-    elif(toks == ""):
+    elif(current_token == ""):
         return True
     else:
         return False
 
-def Literal(current_token):
-    if(Atom(current_token)):
+
+def __Literal__(current_token):
+    if(__Atom__(current_token)):
         return True
-    elif(current_token == "~" and Literal(s.pop())):
+    elif(current_token == "~" and __Literal__(s.pop())):
         return True
     else:
         return False
 
-def Atom(current_token):
+
+def __Atom__(current_token):
     if(current_token == "T"):
         return True
     elif(current_token == "F"):
         return True
     elif(current_token == "("):
-        if(Imply_term(s.pop())):
+        if(__Imply_term__(s.pop())):
             if(s.pop() == ")"):
                 True
             else:
@@ -122,12 +134,10 @@ def Atom(current_token):
         else:
             False
     else:
-<<<<<<< HEAD
-        print("Expecting '(', 'T', or 'F'")
-=======
         print("error: expecting 'T', 'F', or '()'")
->>>>>>> origin/master
         return False
+
+
 """
 def get_next(toks, num):
     count = 0
@@ -141,13 +151,13 @@ def get_next(toks, num):
         return new
 """
 
-def put_stack(tokens):
+
+def __put_stack__(tokens):
     for i in reversed(tokens):
         s.push(i)
 
 
-
-class Stack:
+class __Stack__:
     def __init__(self):
         self.items = []
 
@@ -167,16 +177,16 @@ class Stack:
         for items in reversed(self.items):
             print(items)
 
-s = Stack()
 
-def run():
-    n = 0
+s = __Stack__()
 
+
+def __run__():
     filename = input("enter file name: ")
-    data = open_file(filename) # gets data from file input
-    toks = lex(data) # lexes data
-    put_stack(toks)
-    if(Bool_stmt):
+    data = __open_file__(filename)  # gets data from file input
+    toks = __lex__(data)  # lexes data
+    __put_stack__(toks)
+    if(__Bool_stmt__):
         print("valid")
     else:
         print("invalid")
@@ -192,4 +202,4 @@ def run():
 """
 
 
-run()
+__run__()
